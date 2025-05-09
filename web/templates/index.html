@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SentriGO</title>
+    <link rel="stylesheet" href="../static/css/index.css" />
+    <link rel="stylesheet" href="../static/css/navbar.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="logo">SentriGO</div>
+      <div class="menu-btn"><button>MENU</button></div>
+
+      <div class="links">
+        <a href="/">Home</a>
+      </div>
+    </nav>
+
+    <div class="interfaces-wrap">
+      <h1>Select Interface</h1>
+      <select name="interface" id="interface">
+        {{range .devices}}
+        <option value="{{.Name}}">{{.Description}}</option>
+        {{end}}
+      </select>
+      <button id="start-btn">Start</button>
+    </div>
+
+    <script src="../static/js/index.js"></script>
+  </body>
+</html>

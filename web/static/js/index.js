@@ -1,19 +1,59 @@
-document.getElementById("interface").addEventListener("change", function () {
-  const selectedValue = this.value;
-  console.log("You selected:", selectedValue);
-  const formData = new FormData();
-  formData.append("iface", selectedValue);
-  const xhttp = new XMLHttpRequest();
-  xhttp.open("POST", "/interface", true);
-  xhttp.onreadystatechange = function () {
-    if (this.readyState === 4 && this.status === 200) {
-      console.log("Response:", this.responseText);
-    }
-  };
+const ifaceSelect = document.getElementById("interface");
+const serverStatus = document.querySelector(".server-status");
+const startStopBtn = document.getElementById("start-btn");
 
-  xhttp.send(formData);
+const ws = new WebSocket("ws://localhost:8080/ws");
+
+ws.onopen = function () {
+  console.log("Connected to WebSocket");
+
+  serverStatus.classList.remove("offline");
+  serverStatus.classList.add("online");
+  serverStatus.textContent = "ONLINE";
+};
+
+ws.onclose = function () {
+  console.log("Disconnected from WebSocket");
+  serverStatus.classList.remove("online");
+  serverStatus.classList.add("offline");
+  serverStatus.textContent = "OFFLINE";
+};
+
+ws.onerror = function (error) {
+  console.error("WebSocket error:", error);
+  serverStatus.classList.remove("online");
+  serverStatus.classList.add("offline");
+  serverStatus.textContent = "OFFLINE";
+};
+
+ifaceSelect.addEventListener("change", () => {
+  ws.send(
+    JSON.stringify({
+      action: "toggle-iface",
+      iface: ifaceSelect.value,
+    })
+  );
 });
 
-document.getElementById("start-btn").addEventListener("click", function () {
-  alert();
+startStopBtn.addEventListener("click", () => {
+  if (ifaceSelect.value !== "none") {
+    if (startStopBtn.textContent === "STOP") {
+      startStopBtn.textContent = "START";
+      startStopBtn.classList.remove("STOP");
+      startStopBtn.classList.add("START");
+    } else {
+      startStopBtn.textContent = "STOP";
+      startStopBtn.classList.remove("START");
+      startStopBtn.classList.add("STOP");
+    }
+    console.log("log " + ifaceSelect.value);
+
+    ws.send(
+      JSON.stringify({
+        action: "start-stop",
+      })
+    );
+  } else {
+    alert("Please select a valid interface before starting.");
+  }
 });

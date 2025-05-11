@@ -11,20 +11,21 @@
     <nav>
       <div class="logo">SentriGO</div>
       <div class="menu-btn"><button>MENU</button></div>
-
       <div class="links">
         <a href="/">Home</a>
       </div>
+      <div class="server-status offline">OFFLINE</div>
     </nav>
 
     <div class="interfaces-wrap">
       <h1>Select Interface</h1>
       <select name="interface" id="interface">
+        <option value="none" selected>Select Interface</option>
         {{range .devices}}
         <option value="{{.Name}}">{{.Description}}</option>
         {{end}}
       </select>
-      <button id="start-btn">Start</button>
+      <button id="start-btn" class="START">START</button>
     </div>
 
     <script src="../static/js/index.js"></script>

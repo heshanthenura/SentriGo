@@ -10,9 +10,8 @@ SentriGo listens to a selected network interface and analyzes packets in real-ti
 
 Currently, it includes:
 
-- Interface listing via web UI (Gin framework)
-- Real-time ICMP packet monitoring
-- Ping flood detection logic (≥10 ICMP packets in 30 seconds from same IP)
+- SYN flood detection
+- ICMP flood detection
 
 ## ⚙️ Prerequisites
 

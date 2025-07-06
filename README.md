@@ -18,7 +18,9 @@ Currently, it includes:
 
 ### 🪟 OS Support:
 
-✅ **Only works on Windows**
+✅ **Tested on Windows**
+
+✅ **Linux**
 
 ### 📥 Requirements:
 

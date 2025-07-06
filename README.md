@@ -12,6 +12,7 @@ Currently, it includes:
 
 - SYN flood detection
 - ICMP flood detection
+- NMAP scan detection
 
 ## ⚙️ Prerequisites
 

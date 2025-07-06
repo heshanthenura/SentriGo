@@ -17,10 +17,18 @@ jobs:
         id: get_tag
         run: |
           git fetch --tags
-          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+          
+          # Check if any tags exist
+          if git rev-list --tags --max-count=1 >/dev/null; then
+            latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+          else
+            latest_tag="v0.0.0"
+          fi
+          
           echo "Latest tag: $latest_tag"
-          echo "::set-output name=tag::$latest_tag"
+          echo "tag=$latest_tag" >> $GITHUB_OUTPUT
         shell: bash
+
 
       - name: Increment patch version
         id: inc_version

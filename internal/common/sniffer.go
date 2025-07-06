@@ -26,6 +26,7 @@ func SniffInterface(device pcap.Interface) {
 	detectorList := []detectors.Detector{
 		&detectors.SynFloodDetector{},
 		&detectors.ICMPFloodDetector{},
+		&detectors.NMAPScanDetector{},
 	}
 
 	for packet := range packetSource.Packets() {

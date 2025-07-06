@@ -46,7 +46,7 @@ func (s *ICMPFloodDetector) Detect(packet gopacket.Packet) {
 			IP:        srcIP,
 			StartTime: now,
 			Count:     1,
-			LastAlert: time.Time{}, // initialize LastAlert
+			LastAlert: time.Time{},
 		}
 		return
 	}

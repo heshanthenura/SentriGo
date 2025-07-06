@@ -13,5 +13,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - uses: actions-ecosystem/action-get-latest-tag@v1
-        id: get-latest-ta
+      - name: Get latest tag
+        id: get_tag
+        run: |
+          git fetch --tags
+          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+          echo "Latest tag: $latest_tag"
+          echo "::set-output name=tag::$latest_tag"
+        shell: bash
+
+      - name: Increment patch version
+        id: inc_version
+        run: |
+          tag=${{ steps.get_tag.outputs.tag }}
+          version=${tag#v}
+          IFS='.' read -r major minor patch <<< "$version"
+          patch=$((patch + 1))
+          new_tag="v${major}.${minor}.${patch}"
+          echo "New tag: $new_tag"
+          echo "::set-output name=new_tag::$new_tag"
+        shell: bash
+        

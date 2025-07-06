@@ -13,11 +13,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Test Code Path
-        run: dir
-
-      - name: Build Go
-        run: go build -o ./build/sentrigo.exe ./cmd/sentrigo/
-
-      - name: Test Output Path
-        run: dir build
+      - uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-ta

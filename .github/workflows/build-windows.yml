@@ -44,6 +44,9 @@ jobs:
           git tag ${{ steps.version.outputs.version }}
           git push origin ${{ steps.version.outputs.version }}
 
+      - name: Create build folder
+        run: New-Item -ItemType Directory -Path build
+
       - name: Build zip (example)
         run: Compress-Archive -Path .\src\* -DestinationPath build\output.zip
 

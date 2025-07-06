@@ -13,32 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Get latest tag
-        id: get_tag
-        run: |
-          git fetch --tags
-          
-          # Check if any tags exist
-          if git rev-list --tags --max-count=1 >/dev/null; then
-            latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-          else
-            latest_tag="v0.0.0"
-          fi
-          
-          echo "Latest tag: $latest_tag"
-          echo "tag=$latest_tag" >> $GITHUB_OUTPUT
-        shell: bash
-
-
-      - name: Increment patch version
-        id: inc_version
-        run: |
-          tag=${{ steps.get_tag.outputs.tag }}
-          version=${tag#v}
-          IFS='.' read -r major minor patch <<< "$version"
-          patch=$((patch + 1))
-          new_tag="v${major}.${minor}.${patch}"
-          echo "New tag: $new_tag"
-          echo "::set-output name=new_tag::$new_tag"
-        shell: bash
-        
+      - uses: oprypin/find-latest-tag@v1
+        with:
+          repository: heshanthenura/SentriGo  
+          releases-only: true  
+        id: octokit  
+    
+      - run: echo "Octokit is at version ${{ steps.octokit.outputs.tag }}"

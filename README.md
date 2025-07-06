@@ -1,4 +1,6 @@
-# SentriGo
+<!-- # SentriGo -->
+
+<img src="./banner.png">
 
 ## Lightweight Intrusion Detection System (IDS) for Windows
 

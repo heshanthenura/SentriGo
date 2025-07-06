@@ -16,7 +16,6 @@ jobs:
       - uses: oprypin/find-latest-tag@v1
         with:
           repository: heshanthenura/SentriGo  
-          releases-only: true  
         id: octokit  
     
       - run: echo "Octokit is at version ${{ steps.octokit.outputs.tag }}"

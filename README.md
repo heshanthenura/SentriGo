@@ -16,6 +16,52 @@ Currently, it includes:
 - ICMP flood detection
 - NMAP scan detection
 
+## 🔍 How to Add a New Detection
+
+To create a new detection module, follow these steps:
+
+### 1. Create a New Detector File
+
+Create a new file inside the `internal/detectors` directory. Name the file after your detection logic, e.g., `portscan.go`.
+Add the following boilerplate code:
+
+```go
+package detectors
+
+import "github.com/google/gopacket"
+
+type <DetectionName> struct{}
+
+func (d *<DetectionName>) Detect(packet gopacket.Packet) {
+	// Implement your detection logic here
+}
+```
+
+Replace `<DetectionName>` with the actual name of your detector (e.g., `PortScanDetector`).
+
+Inside the `Detect` function, you can access various packet layers and implement your custom intrusion detection logic using the `gopacket` library.
+
+### 2. Register Your Detector
+
+Open the file `internal/common/sniffer.go`, and locate the `detectorList` initialization.
+
+Add your new detector to the list:
+
+```go
+detectorList := []detectors.Detector{
+	&detectors.SynFloodDetector{},
+	&detectors.ICMPFloodDetector{},
+	&detectors.NMAPScanDetector{},
+	&detectors.<DetectionName>{}, // Add your new detector here
+}
+```
+
+Again, replace `<DetectionName>` with the name of your struct.
+
+✅ Your new detection module is now active and will be called for every captured packet.
+
+---
+
 ## ⚙️ Prerequisites
 
 ### 🪟 OS Support:
